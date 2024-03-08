@@ -25,16 +25,18 @@ class RegisterController extends Controller
         ]);
 
         //store user
-        User::create([
+        $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
 
         //sign user in
-        $credentials = $request->only('email', 'password');
-        Auth::attempt($credentials);
+        // $credentials = $request->only('email', 'password');
+        // Auth::attempt($credentials);
 
+        // Автоматическая аутентификация пользователя
+        Auth::login($user);
         //redirect
         return redirect()->route('home');
     }
